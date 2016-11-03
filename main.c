@@ -51,7 +51,7 @@ uint16_t COMMAND2;
 uint16_t REGIM;
 uint16_t i=0;
 uint16_t N=0;
-uint16_t z=0;     //счетчик для фильтра
+uint16_t z=0;     //Г±Г·ГҐГІГ·ГЁГЄ Г¤Г«Гї ГґГЁГ«ГјГІГ°Г 
 
 uint8_t W;  
 
@@ -74,14 +74,14 @@ TIM_TimeBaseInitTypeDef    TIM_TimeBaseStructur;
 
 
 
-uint16_t TEST=0;
+uint16_t TEST=1;
 #define SLEGENIE 1;
 #define POISK 2;
 
-int32_t Ufsin_mass[1000];                       /// массив последних 80 Udsin
-int32_t Ufcos_mass[1000];                       /// массив последних 80 Ufsin
-int64_t Sum_fsin;                          /// cумма массива Ufsin_mass[80]; 
-int64_t Sum_fcos;                          /// сумма массива Ufcos_mass[80];
+int32_t Ufsin_mass[1000];                       /// Г¬Г Г±Г±ГЁГў ГЇГ®Г±Г«ГҐГ¤Г­ГЁГµ 80 Udsin
+int32_t Ufcos_mass[1000];                       /// Г¬Г Г±Г±ГЁГў ГЇГ®Г±Г«ГҐГ¤Г­ГЁГµ 80 Ufsin
+int64_t Sum_fsin;                          /// cГіГ¬Г¬Г  Г¬Г Г±Г±ГЁГўГ  Ufsin_mass[80]; 
+int64_t Sum_fcos;                          /// Г±ГіГ¬Г¬Г  Г¬Г Г±Г±ГЁГўГ  Ufcos_mass[80];
 int32_t Ufsin;                             /// Sum_fsin/64;
 int32_t Ufcos;                             /// Sum_fcos/64;
 
@@ -140,7 +140,7 @@ USART_Init(USART1,&USART_InitStruct);
 USART_Cmd(USART1, ENABLE);
 
 NVIC_EnableIRQ(USART1_IRQn);
-USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);          /// прерывание по приему USART
+USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);          /// ГЇГ°ГҐГ°Г»ГўГ Г­ГЁГҐ ГЇГ® ГЇГ°ГЁГҐГ¬Гі USART
 
 
   
@@ -154,8 +154,8 @@ ADC_EMS_2_Start(1);
 
 COMP_init();
 
-TIM_TimeBaseStructInit(&TIM_TimeBaseStructur);             /// настройка TIM2 для передачи данных и переключения излучающих электродов
-TIM_TimeBaseStructur.TIM_Period = 1152;                     ///6.25 Гц
+TIM_TimeBaseStructInit(&TIM_TimeBaseStructur);             /// Г­Г Г±ГІГ°Г®Г©ГЄГ  TIM2 Г¤Г«Гї ГЇГҐГ°ГҐГ¤Г Г·ГЁ Г¤Г Г­Г­Г»Гµ ГЁ ГЇГҐГ°ГҐГЄГ«ГѕГ·ГҐГ­ГЁГї ГЁГ§Г«ГіГ·Г ГѕГ№ГЁГµ ГЅГ«ГҐГЄГІГ°Г®Г¤Г®Гў
+TIM_TimeBaseStructur.TIM_Period = 1152;                     ///6.25 ГѓГ¶
 TIM_TimeBaseStructur.TIM_Prescaler = 10000;       
 TIM_TimeBaseStructur.TIM_ClockDivision = 0;    
 TIM_TimeBaseStructur.TIM_CounterMode = TIM_CounterMode_Up;  
@@ -165,15 +165,15 @@ TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 
 
 
-TIM_Cmd(TIM2, ENABLE);                                        //// Запуск таймера для передачи данных и переключения электродов
+TIM_Cmd(TIM2, ENABLE);                                        //// Г‡Г ГЇГіГ±ГЄ ГІГ Г©Г¬ГҐГ°Г  Г¤Г«Гї ГЇГҐГ°ГҐГ¤Г Г·ГЁ Г¤Г Г­Г­Г»Гµ ГЁ ГЇГҐГ°ГҐГЄГ«ГѕГ·ГҐГ­ГЁГї ГЅГ«ГҐГЄГІГ°Г®Г¤Г®Гў
 
-//////////////////////////////// установили оптроны временно!
+//////////////////////////////// ГіГ±ГІГ Г­Г®ГўГЁГ«ГЁ Г®ГЇГІГ°Г®Г­Г» ГўГ°ГҐГ¬ГҐГ­Г­Г®!
 
 GPIO_SetBits(GPIOA, GPIO_Pin_11);
 GPIO_SetBits(GPIOA, GPIO_Pin_12);
 ///////////////////////////////
 
-SPI_SETUP(9, 224); //становили излучатель в 1,5 Вольта
+SPI_SETUP(9, 224); //Г±ГІГ Г­Г®ГўГЁГ«ГЁ ГЁГ§Г«ГіГ·Г ГІГҐГ«Гј Гў 1,5 Г‚Г®Г«ГјГІГ 
 
 while (1)
   {
@@ -203,7 +203,7 @@ void RCC_Configuration(void)
 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);
-RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);    // Тактирование альтернативных функций GPIO.
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);    // Г’Г ГЄГІГЁГ°Г®ГўГ Г­ГЁГҐ Г Г«ГјГІГҐГ°Г­Г ГІГЁГўГ­Г»Гµ ГґГіГ­ГЄГ¶ГЁГ© GPIO.
 
 
 
@@ -211,25 +211,25 @@ RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);    // Тактирование альтерна
 
 
 
-RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);  // Включение тактирования USART1.
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE);  // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї USART1.
 
-RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE); // Включение SPI2.
+RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE); // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ SPI2.
 
-RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);    // Включение тактирования ADC1.
-RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);    // Включение тактирования ADC2.
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);    // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї ADC1.
+RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2, ENABLE);    // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї ADC2.
 
-RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);    // Включение тактирования TIM3 для срабатывания АЦП.
-RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);    // Включение тактирования TIM7 для генерации синуса.
-RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);    // Включение тактирования TIM2 для передачи данных и переключения излучающих электродов.
-RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);    // Включение тактирования TIM6 для формирования компенсационного сигнала.
-
-
+RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);    // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї TIM3 Г¤Г«Гї Г±Г°Г ГЎГ ГІГ»ГўГ Г­ГЁГї ГЂГ–ГЏ.
+RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);    // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї TIM7 Г¤Г«Гї ГЈГҐГ­ГҐГ°Г Г¶ГЁГЁ Г±ГЁГ­ГіГ±Г .
+RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);    // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї TIM2 Г¤Г«Гї ГЇГҐГ°ГҐГ¤Г Г·ГЁ Г¤Г Г­Г­Г»Гµ ГЁ ГЇГҐГ°ГҐГЄГ«ГѕГ·ГҐГ­ГЁГї ГЁГ§Г«ГіГ·Г ГѕГ№ГЁГµ ГЅГ«ГҐГЄГІГ°Г®Г¤Г®Гў.
+RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);    // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї TIM6 Г¤Г«Гї ГґГ®Г°Г¬ГЁГ°Г®ГўГ Г­ГЁГї ГЄГ®Г¬ГЇГҐГ­Г±Г Г¶ГЁГ®Г­Г­Г®ГЈГ® Г±ГЁГЈГ­Г Г«Г .
 
 
-RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);        // Включение тактирования DAC.
 
-RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);      // Включение тактирования DMA.
-RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);      // Включение тактирования DMA 2.
+
+RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);        // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї DAC.
+
+RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);      // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї DMA.
+RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA2, ENABLE);      // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГІГ ГЄГІГЁГ°Г®ГўГ Г­ГЁГї DMA 2.
   
  
 }
@@ -266,7 +266,7 @@ GPIO_Init(GPIOA,&GPIO_InitStruct);
 
 GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_5|GPIO_Pin_4;
 GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
-GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AIN;           // Включение выхода DAC1 и DAC2
+GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AIN;           // Г‚ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГўГ»ГµГ®Г¤Г  DAC1 ГЁ DAC2
 GPIO_Init(GPIOA,&GPIO_InitStruct);
 
 
@@ -360,19 +360,19 @@ GPIO_Init(GPIOC,&GPIO_InitStruct);
 
 
 
-GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_5;                 // ADC2 не работает!!!!!!!!!!!!!!!!!!!
+GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_5;                 // ADC2 Г­ГҐ Г°Г ГЎГ®ГІГ ГҐГІ!!!!!!!!!!!!!!!!!!!
 GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 GPIO_InitStruct.GPIO_Mode = GPIO_Mode_AIN;
 GPIO_Init(GPIOC,&GPIO_InitStruct);
 
 
-GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_12;                 // оптрон
+GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_12;                 // Г®ГЇГІГ°Г®Г­
 GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;
 GPIO_Init(GPIOA,&GPIO_InitStruct);
 
 
-GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_11;                 // оптрон
+GPIO_InitStruct.GPIO_Pin  = GPIO_Pin_11;                 // Г®ГЇГІГ°Г®Г­
 GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 GPIO_InitStruct.GPIO_Mode = GPIO_Mode_Out_PP;
 GPIO_Init(GPIOA,&GPIO_InitStruct);
@@ -427,13 +427,13 @@ COMMAND=USART_ReceiveData(USART1);
 
 USART_ClearFlag(USART1,USART_FLAG_RXNE); 
 
-  if((COMMAND==102||COMMAND==101||COMMAND==100||COMMAND==99)&&(C==0)){                                   //стнадартные команды ЭМИ
+  if((COMMAND==102||COMMAND==101||COMMAND==100||COMMAND==99)&&(C==0)){                                   //Г±ГІГ­Г Г¤Г Г°ГІГ­Г»ГҐ ГЄГ®Г¬Г Г­Г¤Г» ГќГЊГ€
     C=0;
     switch(COMMAND){
     case 102:   SINE_2_EMS();  N=0; z=0; ADC_EMS_2_Start(1);  FREQ=2; break;
     case 101:   SINE_8_EMS();  N=0; z=0; ADC_EMS_8_Start(1);  FREQ=8; break;
     case 100:   SINE_4_EMS();  N=0; z=0; ADC_EMS_4_Start(1);  FREQ=4; break;
-    case 99: COMP_FLAG=1; break;                                                                 //установили флаг компенсации
+    case 99: COMP_FLAG=1; break;                                                                 //ГіГ±ГІГ Г­Г®ГўГЁГ«ГЁ ГґГ«Г ГЈ ГЄГ®Г¬ГЇГҐГ­Г±Г Г¶ГЁГЁ
     };
     
     
@@ -442,7 +442,7 @@ USART_ClearFlag(USART1,USART_FLAG_RXNE);
   
 ///////////////////////////////////////////////////// 
   
-  else { // дополнительные команды ЭМИ принимаем и считаем байты
+  else { // Г¤Г®ГЇГ®Г«Г­ГЁГІГҐГ«ГјГ­Г»ГҐ ГЄГ®Г¬Г Г­Г¤Г» ГќГЊГ€ ГЇГ°ГЁГ­ГЁГ¬Г ГҐГ¬ ГЁ Г±Г·ГЁГІГ ГҐГ¬ ГЎГ Г©ГІГ»
  
 C++; 
 if(C==1){
@@ -521,15 +521,15 @@ while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET);
 
 void ADC1_2_IRQHandler (void) {
   
-  if(COMP_FLAG==0){         //компенсации нет обычная работа 
+  if(COMP_FLAG==0){         //ГЄГ®Г¬ГЇГҐГ­Г±Г Г¶ГЁГЁ Г­ГҐГІ Г®ГЎГ»Г·Г­Г Гї Г°Г ГЎГ®ГІГ  
 ADC_ARRAY[N]=ADC_RES;
 
-if(i<(K)){             //определяем W смещение на 90
+if(i<(K)){             //Г®ГЇГ°ГҐГ¤ГҐГ«ГїГҐГ¬ W Г±Г¬ГҐГ№ГҐГ­ГЁГҐ Г­Г  90
 W=i+(TOCHEK-K);
   }
   else {W=i-(K);};
 
-///////////////////////////////////////////////////////////////////// выработка компенсирующего сигнала
+///////////////////////////////////////////////////////////////////// ГўГ»Г°Г ГЎГ®ГІГЄГ  ГЄГ®Г¬ГЇГҐГ­Г±ГЁГ°ГіГѕГ№ГҐГЈГ® Г±ГЁГЈГ­Г Г«Г 
 //COMP=((ADC_ARRAY[W]>>16))/4+((ADC_ARRAY[N]>>16))/4;
 int16_t QQ=(ADC_ARRAY[N]>>16)-VREF;
 int16_t QQQ=(ADC_ARRAY[W]>>16)-VREF;
@@ -544,22 +544,22 @@ N=N+1;
 
 
 
-if(N==TOCHEK){                                             //обработка после заполнения массива отсчетами(точки)
+if(N==TOCHEK){                                             //Г®ГЎГ°Г ГЎГ®ГІГЄГ  ГЇГ®Г±Г«ГҐ Г§Г ГЇГ®Г«Г­ГҐГ­ГЁГї Г¬Г Г±Г±ГЁГўГ  Г®ГІГ±Г·ГҐГІГ Г¬ГЁ(ГІГ®Г·ГЄГЁ)
 N=0;
  
 
-EMS_MATH_1(); //функция детектора расчитывает Udsin Udcos ничего не возвращает, сохраняет их как глобальные переменные
+EMS_MATH_1(); //ГґГіГ­ГЄГ¶ГЁГї Г¤ГҐГІГҐГЄГІГ®Г°Г  Г°Г Г±Г·ГЁГІГ»ГўГ ГҐГІ Udsin Udcos Г­ГЁГ·ГҐГЈГ® Г­ГҐ ГўГ®Г§ГўГ°Г Г№Г ГҐГІ, Г±Г®ГµГ°Г Г­ГїГҐГІ ГЁГµ ГЄГ ГЄ ГЈГ«Г®ГЎГ Г«ГјГ­Г»ГҐ ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ
 
-                                                                 ///Фильтр НЧ
+                                                                 ///Г”ГЁГ«ГјГІГ° ГЌГ—
 
 
 
-z=z+1;                                                                        /// считаем z
+z=z+1;                                                                        /// Г±Г·ГЁГІГ ГҐГ¬ z
 
 Sum_fsin+=Udsin;
 Sum_fcos+=Udcos;  
 
-if(z==300) {           //фильтр ФНЧ
+if(z==300) {           //ГґГЁГ«ГјГІГ° Г”ГЌГ—
   
 z=0;
 
@@ -574,39 +574,39 @@ Sum_fcos=0;
 /*
 if(COMP_FLAG){
 COMP_FLAG=0;  
-K1=Ufsin/11000; ///11000 максимальный отклик при входном сигнале аналогичном опорному добавить в компенсацию!!!!!!!
+K1=Ufsin/11000; ///11000 Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­Г»Г© Г®ГІГЄГ«ГЁГЄ ГЇГ°ГЁ ГўГµГ®Г¤Г­Г®Г¬ Г±ГЁГЈГ­Г Г«ГҐ Г Г­Г Г«Г®ГЈГЁГ·Г­Г®Г¬ Г®ГЇГ®Г°Г­Г®Г¬Гі Г¤Г®ГЎГ ГўГЁГІГј Гў ГЄГ®Г¬ГЇГҐГ­Г±Г Г¶ГЁГѕ!!!!!!!
 K2=Ufcos/11000;
 };
 */
 
 };
 };
-  }else{     //если флаг компенсации 
+  }else{     //ГҐГ±Г«ГЁ ГґГ«Г ГЈ ГЄГ®Г¬ГЇГҐГ­Г±Г Г¶ГЁГЁ 
   
  ADC_ARRAY[N]=ADC_RES;
  N++;
  
-if(N==ARU_SAMPLES){ //собрали массив из 240 точек
+if(N==ARU_SAMPLES){ //Г±Г®ГЎГ°Г Г«ГЁ Г¬Г Г±Г±ГЁГў ГЁГ§ 240 ГІГ®Г·ГҐГЄ
  N=0; 
 for(i=0; i<ARU_SAMPLES; i++) {
-ADC_ARRAY[i]=(ADC_ARRAY[i] & 0xFFFF);   //signal        выделили 2-ой ацп из общих данных ///
+ADC_ARRAY[i]=(ADC_ARRAY[i] & 0xFFFF);   //signal        ГўГ»Г¤ГҐГ«ГЁГ«ГЁ 2-Г®Г© Г Г¶ГЇ ГЁГ§ Г®ГЎГ№ГЁГµ Г¤Г Г­Г­Г»Гµ ///
 };
 
 MINIMUM=ADC_ARRAY[0];
 
-for(i=1;i<ARU_SAMPLES;i++){          ///нашли минимум синусоиды ( по сути максимальное значение отрицательной амплитуды)
+for(i=1;i<ARU_SAMPLES;i++){          ///Г­Г ГёГ«ГЁ Г¬ГЁГ­ГЁГ¬ГіГ¬ Г±ГЁГ­ГіГ±Г®ГЁГ¤Г» ( ГЇГ® Г±ГіГІГЁ Г¬Г ГЄГ±ГЁГ¬Г Г«ГјГ­Г®ГҐ Г§Г­Г Г·ГҐГ­ГЁГҐ Г®ГІГ°ГЁГ¶Г ГІГҐГ«ГјГ­Г®Г© Г Г¬ГЇГ«ГЁГІГіГ¤Г»)
 if((MINIMUM)>(ADC_ARRAY[i])){
 MINIMUM=ADC_ARRAY[i];  
 };
 };
 
-if(MINIMUM<VOLTAGE_1){ // от 1 В снизу 1В -1241
-RESISTOR=SPI_MORE(1);  //уменьшаем коэффициент усиления приемных ОУ
+if(MINIMUM<VOLTAGE_1){ // Г®ГІ 1 Г‚ Г±Г­ГЁГ§Гі 1Г‚ -1241
+RESISTOR=SPI_MORE(1);  //ГіГ¬ГҐГ­ГјГёГ ГҐГ¬ ГЄГ®ГЅГґГґГЁГ¶ГЁГҐГ­ГІ ГіГ±ГЁГ«ГҐГ­ГЁГї ГЇГ°ГЁГҐГ¬Г­Г»Гµ ГЋГ“
 if(RESISTOR==1023){
-COMP_FLAG=0;            // минимальное усиление, сбросили флаг  
+COMP_FLAG=0;            // Г¬ГЁГ­ГЁГ¬Г Г«ГјГ­Г®ГҐ ГіГ±ГЁГ«ГҐГ­ГЁГҐ, Г±ГЎГ°Г®Г±ГЁГ«ГЁ ГґГ«Г ГЈ  
 };
 }else{
-COMP_FLAG=0;            // ару готов, сбросили флаг
+COMP_FLAG=0;            // Г Г°Гі ГЈГ®ГІГ®Гў, Г±ГЎГ°Г®Г±ГЁГ«ГЁ ГґГ«Г ГЈ
 };
    
  };
@@ -616,13 +616,13 @@ COMP_FLAG=0;            // ару готов, сбросили флаг
 
 }
 
-void TIM2_IRQHandler (void){ ///////////таймер передачи данных
+void TIM2_IRQHandler (void){ ///////////ГІГ Г©Г¬ГҐГ° ГЇГҐГ°ГҐГ¤Г Г·ГЁ Г¤Г Г­Г­Г»Гµ
   
- TIM2->SR &= ~TIM_SR_UIF;                                                    //////// сброс флага прерывания 
+ TIM2->SR &= ~TIM_SR_UIF;                                                    //////// Г±ГЎГ°Г®Г± ГґГ«Г ГЈГ  ГЇГ°ГҐГ°Г»ГўГ Г­ГЁГї 
 
  
  
-if(!COMP_FLAG){ //передача только при отсутсвии компенсации
+if(!COMP_FLAG){ //ГЇГҐГ°ГҐГ¤Г Г·Г  ГІГ®Г«ГјГЄГ® ГЇГ°ГЁ Г®ГІГ±ГіГІГ±ГўГЁГЁ ГЄГ®Г¬ГЇГҐГ­Г±Г Г¶ГЁГЁ
   
 USART_SendData(USART1, 0x0);  
 while (USART_GetFlagStatus(USART1, USART_FLAG_TC) == RESET); 
